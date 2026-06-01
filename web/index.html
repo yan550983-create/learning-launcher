@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Focus Reading Launcher turns links, pasted notes, and local files into timed reading sessions with entry and exit rituals." />
+    <title>Focus Reading Launcher</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Focus Reading Launcher</p>
+        <div class="hero-grid">
+          <div>
+            <h1>把材料放进来，开始一次安静、有边界的阅读。</h1>
+            <p class="hero-copy">
+              链接、GPT 周报、txt / md 文件，都可以被整理成一个带时间限制、进度条、进入仪式和退出仪式的阅读 Session。
+            </p>
+          </div>
+          <div class="stage-map" aria-label="阅读流程">
+            <span>准备</span>
+            <strong></strong>
+            <span>进入</span>
+            <strong></strong>
+            <span>阅读</span>
+            <strong></strong>
+            <span>退出</span>
+          </div>
+        </div>
+      </header>
+
+      <section id="homeView" class="view active" aria-label="创建阅读 Session">
+        <div class="two-column">
+          <section class="panel input-panel">
+            <div class="panel-heading">
+              <p class="eyebrow">Input</p>
+              <h2>选择阅读材料</h2>
+            </div>
+
+            <form id="sessionForm" class="session-form">
+              <label class="field">
+                <span>材料类型</span>
+                <select id="sourceType" required>
+                  <option value="link">网页链接 URL</option>
+                  <option value="text">粘贴文本 / GPT 周报</option>
+                  <option value="file">本地文件 txt / md / pdf</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>标题</span>
+                <input id="titleInput" type="text" placeholder="例如：本周 GPT 产品观察" />
+              </label>
+
+              <label class="field source-field" data-type="link">
+                <span>网页链接</span>
+                <input id="urlInput" type="url" placeholder="https://example.com/article" />
+              </label>
+
+              <label class="field source-field hidden" data-type="text">
+                <span>粘贴内容</span>
+                <textarea id="textInput" rows="9" placeholder="把 GPT 周报、文章片段或学习笔记粘贴到这里..."></textarea>
+              </label>
+
+              <label class="field source-field hidden" data-type="file">
+                <span>上传文件</span>
+                <input id="fileInput" type="file" accept=".txt,.md,.pdf,text/plain,text/markdown,application/pdf" />
+                <small id="fileHint">第一版会读取 txt / md；PDF 暂时保留占位提示，后续接解析。</small>
+              </label>
+
+              <fieldset class="duration-picker">
+                <legend>选择阅读时间</legend>
+                <div class="duration-options" id="durationOptions">
+                  <label><input type="radio" name="duration" value="15" checked />15 分钟</label>
+                  <label><input type="radio" name="duration" value="25" />25 分钟</label>
+                  <label><input type="radio" name="duration" value="45" />45 分钟</label>
+                  <label><input type="radio" name="duration" value="60" />60 分钟</label>
+                  <label class="custom-duration"><input type="radio" name="duration" value="custom" />自定义 <input id="customMinutes" type="number" min="1" max="240" placeholder="分钟" /></label>
+                </div>
+              </fieldset>
+
+              <button class="primary-button" type="submit">创建阅读 Session</button>
+              <p id="formMessage" class="form-message" role="status"></p>
+            </form>
+          </section>
+
+          <aside class="panel session-panel">
+            <div class="panel-heading">
+              <p class="eyebrow">Session Card</p>
+              <h2>当前阅读卡片</h2>
+            </div>
+            <article id="sessionCard" class="session-card empty">
+              <p class="muted">还没有创建 Session。先放入一份材料，然后给它一段安静的时间。</p>
+            </article>
+          </aside>
+        </div>
+
+        <section class="panel history-panel">
+          <div class="panel-heading row-heading">
+            <div>
+              <p class="eyebrow">History</p>
+              <h2>历史阅读记录</h2>
+            </div>
+            <button id="clearHistoryButton" class="ghost-button" type="button">清空历史</button>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </section>
+      </section>
+
+      <section id="ritualView" class="view ritual-view" aria-label="进入仪式">
+        <div class="ritual-card">
+          <p class="eyebrow">Entry Ritual</p>
+          <h2>进入阅读状态</h2>
+          <div class="breathing-orb" aria-hidden="true"><span></span></div>
+          <p class="ritual-copy">把手机放远，关闭多余标签页。接下来只需要守住这一份材料和这段时间。</p>
+          <ul class="ritual-list">
+            <li>我知道这次阅读的主题。</li>
+            <li>我允许自己慢下来。</li>
+            <li>倒计时会在确认后才开始。</li>
+          </ul>
+          <div class="ritual-actions">
+            <button id="backHomeButton" class="ghost-button" type="button">返回修改</button>
+            <button id="enterReadingButton" class="primary-button" type="button">我已进入阅读状态</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="readingView" class="view reading-view" aria-label="阅读页面">
+        <div class="reading-layout">
+          <section class="panel reading-main">
+            <p class="eyebrow">Reading</p>
+            <h2 id="readingTitle">阅读标题</h2>
+            <div id="contentArea" class="content-area"></div>
+          </section>
+
+          <aside class="panel reading-side">
+            <p class="eyebrow">Timer</p>
+            <div id="timerDisplay" class="timer-display">25:00</div>
+            <label class="progress-block">
+              <span>时间进度</span>
+              <progress id="timeProgress" max="100" value="0"></progress>
+            </label>
+
+            <label class="progress-block">
+              <span>阅读进度：<strong id="readingProgressText">0%</strong></span>
+              <input id="readingProgressRange" type="range" min="0" max="100" step="5" value="0" />
+            </label>
+            <div class="quick-progress" aria-label="快速设置阅读进度">
+              <button type="button" data-progress="25">25%</button>
+              <button type="button" data-progress="50">50%</button>
+              <button type="button" data-progress="75">75%</button>
+              <button type="button" data-progress="100">100%</button>
+            </div>
+
+            <label class="field">
+              <span>标记一个关键点</span>
+              <textarea id="keyPointInput" rows="5" placeholder="此刻读到的一个关键点..."></textarea>
+            </label>
+            <button id="finishReadingButton" class="primary-button" type="button">我读完了</button>
+          </aside>
+        </div>
+      </section>
+
+      <section id="exitView" class="view ritual-view" aria-label="退出仪式">
+        <div class="ritual-card exit-card">
+          <p class="eyebrow">Exit Ritual</p>
+          <h2>完成退出</h2>
+          <p class="ritual-copy">在离开之前，留下一句话。它会成为这次阅读真正带走的东西。</p>
+          <label class="field">
+            <span>读到最重要的点</span>
+            <textarea id="takeawayInput" rows="6" placeholder="例如：这篇文章真正提醒我的是..."></textarea>
+          </label>
+          <p id="exitMessage" class="form-message" role="status"></p>
+          <button id="completeExitButton" class="primary-button" type="button">完成退出并保存记录</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
