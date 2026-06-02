@@ -6,7 +6,8 @@ Focus Reading Launcher 是一个静态前端 MVP：把网页链接、粘贴文�
 
 ## 网页入口
 
-- **本地双击入口**：`打开 Focus Reading Launcher.html`
+- **本地双击入口**：`Focus Reading Launcher.html`（英文文件名，更容易找到）
+- 备用中文入口：`打开 Focus Reading Launcher.html`
 - 实际应用文件：`web/index.html`
 - 根目录入口：`index.html`，会自动跳转到 `web/index.html`
 
@@ -15,6 +16,12 @@ Focus Reading Launcher 是一个静态前端 MVP：把网页链接、粘贴文�
 ### 方式 1：双击图标启动（推荐）
 
 在文件管理器里双击这个文件：
+
+```text
+Focus Reading Launcher.html
+```
+
+如果你的系统显示中文文件名，也可以双击备用入口：
 
 ```text
 打开 Focus Reading Launcher.html
@@ -135,6 +142,7 @@ https://<你的 GitHub 用户名>.github.io/<仓库名>/
 .
 ├── AGENTS.md
 ├── README.md
+├── Focus Reading Launcher.html
 ├── index.html
 ├── run.py
 ├── 打开 Focus Reading Launcher.html

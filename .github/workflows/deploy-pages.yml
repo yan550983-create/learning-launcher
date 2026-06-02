@@ -28,6 +28,7 @@ jobs:
         run: |
           mkdir -p _site/web
           cp index.html _site/index.html
+          cp "Focus Reading Launcher.html" _site/
           cp "打开 Focus Reading Launcher.html" _site/
           cp web/index.html web/styles.css web/app.js _site/web/
           touch _site/.nojekyll
