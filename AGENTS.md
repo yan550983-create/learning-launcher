@@ -24,5 +24,5 @@
 ## Testing expectations
 
 - Run `node --check web/app.js` after JavaScript changes.
-- For static-serving checks, prefer `python3 -m http.server` and `curl -I`.
+- For static-serving checks, prefer `python3 run.py --no-browser` or `python3 -m http.server` plus `curl -I`.
 - If changing the visible UI, try to verify that `web/index.html` is reachable through a local static server.

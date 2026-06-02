@@ -11,7 +11,29 @@ Focus Reading Launcher 是一个静态前端 MVP：把网页链接、粘贴文�
 
 ## 本地运行
 
-### 方式 1：直接打开
+### 方式 1：Python 一键启动（推荐）
+
+在仓库根目录运行：
+
+```bash
+python3 run.py
+```
+
+也可以在支持 Python 文件关联的系统里直接双击 `run.py`。这个脚本会自动启动本地静态服务器，并打开浏览器进入应用：
+
+```text
+http://127.0.0.1:8000/web/index.html
+```
+
+如果 8000 端口被占用，脚本会自动尝试后面的可用端口。停止应用时，在终端按 `Ctrl+C`。
+
+如果你不想自动打开浏览器，可以运行：
+
+```bash
+python3 run.py --no-browser
+```
+
+### 方式 2：直接打开网页文件
 
 在文件管理器或浏览器里直接打开：
 
@@ -19,7 +41,7 @@ Focus Reading Launcher 是一个静态前端 MVP：把网页链接、粘贴文�
 web/index.html
 ```
 
-### 方式 2：启动静态服务器（推荐）
+### 方式 3：手动启动静态服务器
 
 在仓库根目录运行：
 
@@ -113,6 +135,7 @@ https://<你的 GitHub 用户名>.github.io/<仓库名>/
 ├── AGENTS.md
 ├── README.md
 ├── index.html
+├── run.py
 ├── web/
 │   ├── index.html
 │   ├── styles.css
