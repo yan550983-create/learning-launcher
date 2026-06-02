@@ -6,20 +6,45 @@ Focus Reading Launcher 是一个静态前端 MVP：把网页链接、粘贴文�
 
 ## 网页入口
 
+- **本地双击入口**：`打开 Focus Reading Launcher.html`
 - 实际应用文件：`web/index.html`
 - 根目录入口：`index.html`，会自动跳转到 `web/index.html`
 
-## 本地运行
+## 本地运行：不要终端、不要上传
 
-### 方式 1：Python 一键启动（推荐）
+### 方式 1：双击图标启动（推荐）
 
-在仓库根目录运行：
+在文件管理器里双击这个文件：
+
+```text
+打开 Focus Reading Launcher.html
+```
+
+它会直接用浏览器打开本地应用，不需要打开终端，不需要上传到 GitHub，也不会把学习材料发送到网络。建议给这个文件创建桌面快捷方式，当作本地启动图标使用；不要只把它单独复制走，因为它需要旁边的 `web/` 文件夹。
+
+打开后你就可以：
+
+- 粘贴网页链接，创建一次阅读 Session。
+- 粘贴 GPT 周报或学习文本，直接进入阅读。
+- 选择本地 `txt` / `md` 文件开始阅读；`pdf` 第一版会显示占位提示，后续再接解析。
+
+### 方式 2：直接打开实际网页文件
+
+如果双击入口没有跳转，也可以直接打开：
+
+```text
+web/index.html
+```
+
+### 方式 3：Python 启动器（仅作为备用）
+
+你已经安装 Python 的情况下，也可以双击 `run.py`，或在需要排查问题时运行：
 
 ```bash
 python3 run.py
 ```
 
-也可以在支持 Python 文件关联的系统里直接双击 `run.py`。这个脚本会自动启动本地静态服务器，并打开浏览器进入应用：
+这个备用方式会启动本地静态服务器，并打开：
 
 ```text
 http://127.0.0.1:8000/web/index.html
@@ -27,37 +52,13 @@ http://127.0.0.1:8000/web/index.html
 
 如果 8000 端口被占用，脚本会自动尝试后面的可用端口。停止应用时，在终端按 `Ctrl+C`。
 
-如果你不想自动打开浏览器，可以运行：
+开发或测试时如果不想自动打开浏览器，可以运行：
 
 ```bash
 python3 run.py --no-browser
 ```
 
-### 方式 2：直接打开网页文件
-
-在文件管理器或浏览器里直接打开：
-
-```text
-web/index.html
-```
-
-### 方式 3：手动启动静态服务器
-
-在仓库根目录运行：
-
-```bash
-python3 -m http.server 8000 --bind 0.0.0.0
-```
-
-然后打开：
-
-```text
-http://127.0.0.1:8000/web/index.html
-```
-
-如果你在远程容器、Codespaces、云 IDE 或 GitHub 预览环境中使用，请通过平台提供的 **Ports / Preview / Open in Browser** 打开 8000 端口，再访问 `/web/index.html`。
-
-## GitHub Pages 部署
+## GitHub Pages 部署（可选，不是本地使用必需）
 
 这个项目已经包含 GitHub Pages workflow。推送到 `main` 后：
 
@@ -136,6 +137,7 @@ https://<你的 GitHub 用户名>.github.io/<仓库名>/
 ├── README.md
 ├── index.html
 ├── run.py
+├── 打开 Focus Reading Launcher.html
 ├── web/
 │   ├── index.html
 │   ├── styles.css

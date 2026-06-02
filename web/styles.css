@@ -76,6 +76,18 @@ h1 {
   font-size: 1.08rem;
   line-height: 1.8;
 }
+
+.local-note {
+  display: inline-flex;
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(136, 106, 69, 0.2);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255, 253, 248, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
 .stage-map {
   display: grid;
   grid-template-columns: repeat(7, auto);
